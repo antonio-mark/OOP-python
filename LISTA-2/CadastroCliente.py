@@ -1,3 +1,8 @@
+class Auth():
+    REPROVADO = 0
+    APROVADO = 1
+    BLOCK = 2
+
 class CadastroCliente:
     def __init__(self, nome, sobrenome, data_nascimento, email, cpf, senha):
         self._nome = nome
@@ -6,14 +11,18 @@ class CadastroCliente:
         self._email = email
         self.__cpf = cpf
         self.__senha = senha
-        self.__auth = False
+        self.__auth = Auth.REPROVADO
+        self._count = 0
     
-    def login(self, email, senha):
+    def login(self, email, senha):       
         if email != self._email or senha != self.__senha:
             print('\nEmail ou senha inválidos!')
-            self.setAuth(False)
+            self.setAuth(Auth.REPROVADO)
+            self._count += 1        
+            if self._count == 3:
+                self.setAuth(Auth.BLOCK)       
         else:
-            self.setAuth(True)
+            self.setAuth(Auth.APROVADO)
 
     def setAuth(self, auth):
         self.__auth = auth
@@ -32,7 +41,6 @@ class CadastroCliente:
 
 escolha = None
 cliente = None
-bloqueio = False
 
 def menu():
     print('\n..:: Escolha sua opção ::..\n')
@@ -46,7 +54,7 @@ while escolha != '3':
     escolha = menu()
     
     if escolha == '1':
-        if bloqueio is True:
+        if cliente is not None and cliente.getAuth() is Auth.BLOCK:
             print('BLOQUEIO DE SEGURANÇA')
             continue
         
@@ -61,7 +69,7 @@ while escolha != '3':
         cliente = CadastroCliente(nome, sobrenome, data_nascimento, email, cpf, senha)
         
     elif escolha == '2':
-        if bloqueio is True:
+        if cliente is not None and cliente.getAuth() is Auth.BLOCK:
             print('BLOQUEIO DE SEGURANÇA')
             continue
         
@@ -76,12 +84,9 @@ while escolha != '3':
             senha = input('Digite sua senha: ')
             cliente.login(email, senha)
 
-            if cliente.getAuth() is True:
+            if cliente.getAuth() is Auth.APROVADO:
                 cliente.consultar()
-                break
-        
-        if cliente.getAuth() is False: 
-            bloqueio = True   
+                break  
 
     elif escolha == '3':
         print('Sistema finalizado!')  
