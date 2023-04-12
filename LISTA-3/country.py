@@ -43,4 +43,5 @@ class Country:
     
     def commonNeighbors(self, country):
         return list(set(self._borders) & set(country._borders))
-
+      # return list(set(self._borders).intersection(country._borders))
+      # return list(filter(lambda x: x in country._borders, self._borders))
