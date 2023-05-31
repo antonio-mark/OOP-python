@@ -13,9 +13,6 @@ def ler_usuarios_csv(arquivo):
         usuarios.append(usuario) 
         return usuarios
     
-
-print(ler_usuarios_csv('Usuarios.csv')[1].get_cpf())
-    
 def ler_assinaturas_csv(arquivo):
     assinaturas = []
     arqCSV = open(arquivo)
