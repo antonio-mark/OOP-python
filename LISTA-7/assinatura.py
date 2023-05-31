@@ -6,16 +6,14 @@ class Assinatura():
         self._status = status
 
     def serializar(self):
-        return ';'.join(self._id_usuario, self._tipo, self._preco, self._status) 
+        return [self._id_usuario, self._tipo, self._preco, self._status]
     
     def desserializar(self, dados):
-        self._nome = dados[0]
-        self._sobrenome = dados[1]
-        self._data_nascimento = dados[2]
-        self.set_cpf(dados[3])
-        self._nome_usuario = dados[4]
-        self.set_senha(dados[5])
-
+        self._id_usuario = dados[0]
+        self._tipo = dados[1]
+        self._preco = dados[2]
+        self._status = dados[3]
+        
     def exibir_detalhes(self):
         print("ID do usuário: " + self._id_usuario)
         print("Tipo: " + self._tipo)

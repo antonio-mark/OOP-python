@@ -8,6 +8,9 @@ class Usuario():
         self.__senha = senha
         self._assinaturas = []
 
+    def verificar_autenticacao(self, nome_usuario, senha):
+        return self._nome_usuario == nome_usuario and self.__senha == senha
+
     def get_senha(self):
         return self.__senha
     
@@ -24,7 +27,7 @@ class Usuario():
         self._assinaturas.append(assinatura)
 
     def cancelar_assinatura(self, id_assinatura):
-        self._assinaturas.remove(id_assinatura)
+        return self._assinaturas.pop(id_assinatura)
 
     def exibir_dados(self):
         print("Nome: " + self._nome)
@@ -35,8 +38,8 @@ class Usuario():
         print("Senha " + self.get_senha())
 
     def serializar(self):
-        return ';'.join(self._nome, self._sobrenome, self._data_nascimento, self.get_cpf(), self._nome_usuario, self.get_senha())
- 
+        return [self._nome, self._sobrenome, self._data_nascimento, self.get_cpf(), self._nome_usuario, self.get_senha()]
+    
     def desserializar(self, dados):
         self._nome = dados[0]
         self._sobrenome = dados[1]
@@ -44,8 +47,3 @@ class Usuario():
         self.set_cpf(dados[3])
         self._nome_usuario = dados[4]
         self.set_senha(dados[5])
-
-    
-
-# • desserializar(dados): método estático que recebe uma lista com os dados de uma assinatura
-# no formato CSV e altera os atributos de um objeto da classe Usuários com os valores lidos
